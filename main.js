@@ -1,20 +1,23 @@
 // 1 = coin
 // 2 = brick
+// 3 = cherry
 var world = [
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-    [2,0,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
+    [2,0,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,3,2],
     [2,1,2,2,1,2,1,2,2,2,2,2,2,1,2,1,2,2,1,2],
-    [2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2],
+    [2,1,2,1,1,1,3,1,1,1,1,1,1,1,1,1,1,2,1,2],
     [2,1,2,1,2,2,1,2,2,0,0,2,2,1,2,2,1,2,1,2],
     [2,1,1,1,1,1,1,2,0,0,0,0,2,1,1,1,1,1,1,2],
     [2,1,2,1,2,2,1,2,2,2,2,2,2,1,2,2,1,2,1,2],
-    [2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2],
+    [2,1,2,1,1,1,1,1,1,1,1,1,1,3,1,1,1,2,1,2],
     [2,1,2,2,1,2,1,2,2,2,2,2,2,1,2,1,2,2,1,2],
-    [2,1,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,1,2],
+    [2,3,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,3,2],
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
 ];
 
 var score = 0;
+
+var cherries = 5;
 
 var pacman = {
     x: 1,
@@ -33,6 +36,8 @@ function displayWorld() {
                 output += "<div class='coin'></div>";
             } else if (world[i][j] === 0) {
                 output += "<div class='empty'></div>";
+            } else if (world[i][j] === 3) {
+                output += "<div class='cherry'></div>";
             }
         }
         output += "</div>";
@@ -68,10 +73,16 @@ document.onkeydown = function(e) {
         $('div#pacman').css('transform', 'rotate(-90deg)');
     }
 
-    // if pacman's current location is a coin, remove it and update world and score
-    if (world[pacman.y][pacman.x] === 1) {
+    // if pacman's current location is not a brick or empty
+    if (world[pacman.y][pacman.x] !== 2 || world[pacman.y][pacman.x] !== 0) {
+        if (world[pacman.y][pacman.x] === 1) {
+            score += 10;
+            $('#score').css('color','white');
+        } else if (world[pacman.y][pacman.x] === 3) {
+            score += 50;
+            $('#score').css('color','lime');
+        }
         world[pacman.y][pacman.x] = 0;
-        score += 10;
         displayWorld();
         displayScore();
     }

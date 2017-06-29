@@ -28,6 +28,7 @@ div.empty {
 
 div#pacman {
     background: url('pacman.gif');
+    transform: scaleX(-1);
     background-size: cover;
     position: absolute;
     width: 20px;

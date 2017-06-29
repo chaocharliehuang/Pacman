@@ -53,14 +53,18 @@ displayPacman();
 displayScore();
 
 document.onkeydown = function(e) {
-    if (e.keyCode === 37) {
+    if (e.keyCode === 37) { // left
         pacman.x--;
-    } else if (e.keyCode === 39) {
+        $('div#pacman').css('transform', 'scaleX(1)');
+    } else if (e.keyCode === 39) { // right
         pacman.x++;
-    } else if (e.keyCode === 38) {
+        $('div#pacman').css('transform', 'scaleX(-1)');
+    } else if (e.keyCode === 38) { // up
         pacman.y--;
-    } else if (e.keyCode === 40) {
+        $('div#pacman').css('transform', 'rotate(90deg)');
+    } else if (e.keyCode === 40) { // down
         pacman.y++;
+        $('div#pacman').css('transform', 'rotate(-90deg)');
     }
 
     // if pacman's current location is a coin, remove it and update world and score

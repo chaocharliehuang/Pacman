@@ -1,0 +1,47 @@
+body {
+    background-color: black;
+    margin: 0;
+}
+
+div#world {
+    font-size: 0;
+}
+
+div.row div {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+div.brick {
+     background-color: blue;
+}
+
+div.coin {
+    background: url('coin.gif');
+    background-size: cover;
+}
+
+div.empty {
+
+}
+
+div#pacman {
+    background: url('pacman.gif');
+    background-size: cover;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+}
+
+div#score {
+    border: 2px solid white;
+    width: 30px;
+    height: 20px;
+    padding: 7px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 210px;
+}

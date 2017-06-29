@@ -17,7 +17,7 @@ var world = [
 
 var score = 0;
 
-var lives = 3;
+var lives = 1;
 
 var cherries = 5;
 
@@ -77,6 +77,10 @@ displayScore();
 displayLives();
 
 document.onkeydown = function(e) {
+    if (score < 0 || lives === 0) {
+        return null;
+    }
+
     if (e.keyCode === 37 && world[pacman.y][pacman.x-1] !== 2) { // left
         pacman.x--;
         $('div#pacman').css('transform', 'scaleX(1)');
@@ -99,6 +103,7 @@ document.onkeydown = function(e) {
         } else if (world[pacman.y][pacman.x] === 3) { // cherry
             score += 50;
             $('#score').css('color','lime');
+            cherries--;
         }
         world[pacman.y][pacman.x] = 0;
         displayWorld();
@@ -109,7 +114,6 @@ document.onkeydown = function(e) {
 
 function gameLoop() {
     if (pacman.x === ghost.x && pacman.y === ghost.y) {
-        console.log('hit ghost!');
         score -= 50;
         $('#score').css('color','red');
         lives -= 1;
@@ -120,14 +124,20 @@ function gameLoop() {
         displayPacman();
     }
 
-    if (lives === 0) {
-        console.log('you lost');
+    if (lives === 0 || score < 0 || cherries === 0) {
         endGame();
     }
 
 }
 
 function endGame() {
+    $('#world').html('');
+    $('#pacman, #ghost').css('display','none');
+    if (lives === 0 || score < 0) {
+        $('#game-over').html('<p>You lost :(</p><a href="./index.html">Play again</a>');
+    } else if (cherries === 0) {
+        $('#game-over').html('<p>You won! :D</p><a href="./index.html">Play again</a>');
+    }
     clearInterval(startGame);
 }
 

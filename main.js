@@ -2,7 +2,7 @@
 // 2 = brick
 var world = [
     [2,2,2,2,2,2,2,2,2,2],
-    [2,1,1,2,1,1,1,1,1,2],
+    [2,0,1,2,1,1,1,1,1,2],
     [2,1,1,2,1,1,1,1,1,2],
     [2,1,1,2,2,2,2,1,1,2],
     [2,1,1,1,1,1,2,1,1,2],
@@ -21,13 +21,6 @@ var pacman = {
 };
 
 function displayWorld() {
-    // if pacman's current location is a coin, remove it and update world and score
-    if (world[pacman.y][pacman.x] === 1) {
-        world[pacman.y][pacman.x] = 0;
-        score += 10;
-        displayScore();
-    }
-
     var output = '';
 
     for (var i = 0; i < world.length; i++) {
@@ -70,6 +63,13 @@ document.onkeydown = function(e) {
         pacman.y++;
     }
 
-    displayWorld();
+    // if pacman's current location is a coin, remove it and update world and score
+    if (world[pacman.y][pacman.x] === 1) {
+        world[pacman.y][pacman.x] = 0;
+        score += 10;
+        displayWorld();
+        displayScore();
+    }
+
     displayPacman();
 }

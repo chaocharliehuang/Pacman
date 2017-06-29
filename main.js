@@ -17,7 +17,7 @@ var world = [
 
 var score = 0;
 
-var lives = 1;
+var lives = 2;
 
 var cherries = 5;
 
@@ -62,6 +62,24 @@ function displayGhost() {
     document.getElementById('ghost').style.top = ghost.y*20 + "px";
 }
 
+function moveGhost() {
+    var zeroThruThree = Math.floor(Math.random()*4);
+    if (zeroThruThree === 0 && world[ghost.y][ghost.x-1] !== 2) { // left
+        ghost.x--;
+        $('div#ghost').css('transform', 'scaleX(1)');
+    } else if (zeroThruThree === 1 && world[ghost.y][ghost.x+1] !== 2) { // right
+        ghost.x++;
+        $('div#ghost').css('transform', 'scaleX(-1)');
+    } else if (zeroThruThree === 2 && world[ghost.y-1][ghost.x] !== 2) { // up
+        ghost.y--;
+        $('div#ghost').css('transform', 'rotate(90deg)');
+    } else if (zeroThruThree === 3 && world[ghost.y+1][ghost.x] !== 2) { // down
+        ghost.y++;
+        $('div#ghost').css('transform', 'rotate(-90deg)');
+    }
+    displayGhost();
+}
+
 function displayScore() {
     document.getElementById('score').innerHTML = "Score: " + score;
 }
@@ -73,11 +91,12 @@ function displayLives() {
 displayWorld();
 displayPacman();
 displayGhost();
+moveGhost();
 displayScore();
 displayLives();
 
 document.onkeydown = function(e) {
-    if (score < 0 || lives === 0) {
+    if (score < 0 || lives === 0 || cherries === 0) {
         return null;
     }
 
@@ -100,6 +119,7 @@ document.onkeydown = function(e) {
         if (world[pacman.y][pacman.x] === 1) { // coin
             score += 10;
             $('#score').css('color','white');
+            $('#lives').css('color','white');
         } else if (world[pacman.y][pacman.x] === 3) { // cherry
             score += 50;
             $('#score').css('color','lime');
@@ -113,10 +133,12 @@ document.onkeydown = function(e) {
 }
 
 function gameLoop() {
+    moveGhost();
     if (pacman.x === ghost.x && pacman.y === ghost.y) {
         score -= 50;
         $('#score').css('color','red');
         lives -= 1;
+        $('#lives').css('color','red');
         pacman.x = 1;
         pacman.y = 1;
         displayScore();
@@ -127,7 +149,6 @@ function gameLoop() {
     if (lives === 0 || score < 0 || cherries === 0) {
         endGame();
     }
-
 }
 
 function endGame() {

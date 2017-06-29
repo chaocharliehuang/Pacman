@@ -14,7 +14,7 @@ div.row div {
 }
 
 div.brick {
-     background-color: blue;
+     background-color: navy;
 }
 
 div.coin {
@@ -44,5 +44,5 @@ div#score {
     color: white;
     position: absolute;
     top: 0;
-    left: 210px;
+    left: 410px;
 }

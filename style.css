@@ -35,6 +35,15 @@ div#pacman {
     height: 20px;
 }
 
+div#ghost {
+    background: url('ghost.gif');
+    /*transform: scaleX(-1);*/
+    background-size: cover;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+}
+
 div.cherry {
     background: url('cherry.png');
     background-size: cover;
@@ -44,12 +53,24 @@ div.cherry {
 
 div#score {
     border: 2px solid white;
-    width: 30px;
+    width: 70px;
     height: 20px;
     padding: 7px;
     text-align: center;
     color: white;
     position: absolute;
     top: 0;
+    left: 410px;
+}
+
+div#lives {
+    border: 2px solid white;
+    width: 70px;
+    height: 20px;
+    padding: 7px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 50px;
     left: 410px;
 }

@@ -17,12 +17,19 @@ var world = [
 
 var score = 0;
 
+var lives = 3;
+
 var cherries = 5;
 
 var pacman = {
     x: 1,
     y: 1
 };
+
+var ghost = {
+    x: 9,
+    y: 5
+}
 
 function displayWorld() {
     var output = '';
@@ -50,13 +57,24 @@ function displayPacman() {
     document.getElementById('pacman').style.top = pacman.y*20 + "px";
 }
 
+function displayGhost() {
+    document.getElementById('ghost').style.left = ghost.x*20 + "px";
+    document.getElementById('ghost').style.top = ghost.y*20 + "px";
+}
+
 function displayScore() {
-    document.getElementById('score').innerHTML = score;
+    document.getElementById('score').innerHTML = "Score: " + score;
+}
+
+function displayLives() {
+    document.getElementById('lives').innerHTML = "Lives: " + lives;
 }
 
 displayWorld();
 displayPacman();
+displayGhost();
 displayScore();
+displayLives();
 
 document.onkeydown = function(e) {
     if (e.keyCode === 37 && world[pacman.y][pacman.x-1] !== 2) { // left
@@ -75,10 +93,10 @@ document.onkeydown = function(e) {
 
     // if pacman's current location is not a brick or empty
     if (world[pacman.y][pacman.x] !== 2 || world[pacman.y][pacman.x] !== 0) {
-        if (world[pacman.y][pacman.x] === 1) {
+        if (world[pacman.y][pacman.x] === 1) { // coin
             score += 10;
             $('#score').css('color','white');
-        } else if (world[pacman.y][pacman.x] === 3) {
+        } else if (world[pacman.y][pacman.x] === 3) { // cherry
             score += 50;
             $('#score').css('color','lime');
         }
@@ -86,6 +104,31 @@ document.onkeydown = function(e) {
         displayWorld();
         displayScore();
     }
-
     displayPacman();
 }
+
+function gameLoop() {
+    if (pacman.x === ghost.x && pacman.y === ghost.y) {
+        console.log('hit ghost!');
+        score -= 50;
+        $('#score').css('color','red');
+        lives -= 1;
+        pacman.x = 1;
+        pacman.y = 1;
+        displayScore();
+        displayLives();
+        displayPacman();
+    }
+
+    if (lives === 0) {
+        console.log('you lost');
+        endGame();
+    }
+
+}
+
+function endGame() {
+    clearInterval(startGame);
+}
+
+var startGame = setInterval(gameLoop, 100);
